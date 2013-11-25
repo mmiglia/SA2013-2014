@@ -1,0 +1,14 @@
+package it.unige.dibris.sa;
+
+public class Pluto
+{
+	public static void main(String[] argv)
+	{
+		System.out.println("Hello Pluto");
+	}
+
+	static
+	{
+		System.out.println("it.unige.dibris.sa.Pluto");
+	}
+}
