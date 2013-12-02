@@ -1,0 +1,15 @@
+package net;
+
+public class Request
+{
+	static Integer count = 0;
+	int num;
+
+	public Request()
+	{
+		synchronized(count)
+		{
+			num = count++;
+		}
+	}
+}
