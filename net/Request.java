@@ -16,6 +16,12 @@ implements java.io.Serializable
 		complete = false;
 	}
 
+	public Request(Request r)
+	{
+		num = r.num;
+		complete = r.complete;
+	}
+
 	public void execute()
 	{
 		System.out.println("Richiesta #"+num+" eseguita");

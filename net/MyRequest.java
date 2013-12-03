@@ -6,6 +6,18 @@ implements java.io.Serializable
 {
 	double temperatura;
 
+	public MyRequest()
+	{
+		super();
+		temperatura = 0;
+	}
+
+	public MyRequest(MyRequest mr)
+	{
+		super(mr);
+		temperatura = mr.temperatura;
+	}
+
 	public void execute()
 	{
 		super.execute();
