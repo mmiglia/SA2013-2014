@@ -22,6 +22,15 @@ public class ServerMT
 
 	void exec(String[] argv)
 	{
+		int numServ = 3;
+		if(argv.length > 0)
+		{
+			numServ = Integer.parseInt(argv[0]);
+		}
+		for(int i=0;i<numServ;i++)
+		{
+			(new Thread(new Servant(q))).start();
+		}
 		try
 		{
 			ss = new ServerSocket(5678);
@@ -82,6 +91,7 @@ public class ServerMT
 							synchronized(q)
 							{
 								q.add(new Envelope(req, oos));
+								System.out.println("Ci sono " + q.size() + " richieste in attesa");
 								q.notify();
 							}
 						}
