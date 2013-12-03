@@ -51,10 +51,17 @@ implements Runnable
 			{
 				req.temperatura = 15 + random.nextInt(10);
 				System.out.println(req.toString());
-				oos.writeObject((new MyRequest2(req)));
-				oos.flush();
+				synchronized(oos)
+				{
+					oos.writeObject((new MyRequest2(req)));
+					oos.flush();
+				}
 	
-				Request retVal = (Request)ois.readObject();
+				Request retVal = null;
+				synchronized(ois)
+				{
+					retVal = (Request)ois.readObject();
+				}
 				System.out.println(retVal.toString());
 	
 				try
