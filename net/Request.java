@@ -4,6 +4,8 @@ public class Request
 implements java.io.Serializable
 {
 	static int count = 0;
+
+	String id;
 	int num;
 	boolean complete;
 
