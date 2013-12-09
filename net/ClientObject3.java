@@ -10,10 +10,17 @@ implements Runnable
 	Socket s = null;
 	ObjectOutputStream oos = null;
 	ObjectInputStream ois = null;
+	Map<String, RequestBox> mappaRisposte;
 
 	public static void main(String[] argv)
 	{
-		(new ClientObject3()).exec(argv);
+		new ClientObject3();
+	}
+
+	public ClientObject3()
+	{
+		mappaRisposte = new HashMap<String, RequestBox>();
+		exec((String[])null);
 	}
 
 	void exec(String[] argv)
@@ -37,18 +44,18 @@ implements Runnable
 		}
 	}
 
-	public request pleaseServeMe(Request r)
+	public Request pleaseServeMe(Request r) throws IOException
 	{
 		r.id = Thread.currentThread().getName();
+
+		RequestBox rb = new RequestBox();
+
+		mappaRisposte.put(r.id, rb);
 		synchronized(oos)
 		{
 			oos.writeObject(r);
 			oos.flush();
 		}
-
-		RequestBox rb = new RequestBox();
-
-		mappaRisposte.put(r.id, rb);
 
 		synchronized(rb)
 		{
@@ -71,7 +78,21 @@ implements Runnable
 	{
 		while(true)
 		{
-			Request req = (Request)ois.readObject();
+			Request req = null;
+			try
+			{
+				req = (Request)ois.readObject();
+			}
+			catch(ClassNotFoundException cnfe)
+			{
+				cnfe.printStackTrace();
+				continue;
+			}
+			catch(IOException ioe)
+			{
+				ioe.printStackTrace();
+				continue;
+			}
 			RequestBox rb = mappaRisposte.get(req.id);//non considero il caso che non ci sia un qualcuno in attesa
 
 			synchronized(rb)
