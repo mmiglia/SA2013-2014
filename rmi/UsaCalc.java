@@ -34,7 +34,12 @@ public class UsaCalc
 				else if(line.equals("accumulate"))
 				{
 					double d1 = Double.parseDouble(br.readLine());
-					c.accumulate(d1);
+					/* questo lock e' solo locale, non serve
+					synchronized(c)
+					{
+					*/
+						c.accumulate(d1);
+					//}
 				}
 				else if(line.equals("accumulated"))
 				{

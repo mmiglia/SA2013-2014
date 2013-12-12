@@ -16,12 +16,14 @@ implements Calc
 
 	public double sum(double d1, double d2) throws RemoteException
 	{
+		pause(5000);
 		System.out.println("La somma di " + d1 + " con " + d2 + " vale " + (d1+d2));
 		return d1 + d2;
 	}
 
 	public double sub(double d1, double d2) throws RemoteException
 	{
+		pause(5000);
 		System.out.println("La sottrazione di " + d2 + " da " + d1 + " vale " + (d1-d2));
 		return d1 - d2;
 	}
@@ -29,6 +31,7 @@ implements Calc
 	public void accumulate(double d) throws RemoteException
 	{
 		double tmp = accumulator;
+		pause(5000);
 		tmp = tmp + d;
 		accumulator = tmp;
 	}
@@ -58,12 +61,14 @@ implements Calc
 		}
 		try
 		{
-			java.rmi.Naming.bind(name, ci);
+			java.rmi.Naming.rebind(name, ci);
 		}
+		/*
 		catch(AlreadyBoundException abe)
 		{
 			abe.printStackTrace();
 		}
+		*/
 		catch(java.net.MalformedURLException mue)
 		{
 			mue.printStackTrace();
@@ -72,7 +77,22 @@ implements Calc
 		{
 			re.printStackTrace();
 		}
+		/*
+		*/
 
 		System.out.println("Il thread " + Thread.currentThread().getName() + " termina");
+	}
+
+	private void pause(int i)
+	{
+		System.out.println("Esegue il thread " + Thread.currentThread().getName());
+		try
+		{
+			Thread.sleep(i);
+		}
+		catch(InterruptedException ie)
+		{
+			ie.printStackTrace();
+		}
 	}
 }
