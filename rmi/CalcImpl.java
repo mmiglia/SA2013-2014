@@ -28,7 +28,7 @@ implements Calc
 		return d1 - d2;
 	}
 
-	public void accumulate(double d) throws RemoteException
+	public synchronized void accumulate(double d) throws RemoteException
 	{
 		double tmp = accumulator;
 		pause(5000);
@@ -36,7 +36,7 @@ implements Calc
 		accumulator = tmp;
 	}
 
-	public double accumulated() throws RemoteException
+	public synchronized double accumulated() throws RemoteException
 	{
 		return accumulator;
 	}
